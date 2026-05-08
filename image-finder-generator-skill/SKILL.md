@@ -1,3 +1,8 @@
+---
+name: image-finder-generator-skill
+description: Find suitable existing images with source and licence details, or generate AI image prompts/images when no usable image is available.
+---
+
 # Image Finder & Generator Skill
 
 ## Purpose
