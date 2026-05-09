@@ -1,0 +1,1467 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Food Security Explainer</title>
+  <style>
+    :root {
+      --paper: #fdfcf8;
+      --paper-2: #f3eee4;
+      --ink: #1f2421;
+      --muted: #6f6860;
+      --red: #8b1e1e;
+      --green: #315c45;
+      --ochre: #d39b37;
+      --blue: #37586b;
+      --charcoal: #151715;
+      --line: #d8d1c5;
+      --max: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(22px, 8vw, 120px);
+      background: rgba(253, 252, 248, 0.95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand { font-weight: 800; font-size: 15px; }
+    .nav {
+      display: flex;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    section {
+      position: relative;
+      min-height: 720px;
+      padding: 82px clamp(22px, 8vw, 120px);
+      overflow: hidden;
+    }
+
+    .inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      max-width: 1080px;
+      font-size: clamp(46px, 7vw, 104px);
+      line-height: 0.98;
+      font-weight: 900;
+    }
+
+    h2 {
+      max-width: 980px;
+      font-size: clamp(36px, 4.4vw, 64px);
+      line-height: 1.04;
+      font-weight: 850;
+    }
+
+    .subtitle {
+      margin-top: 28px;
+      font-size: clamp(22px, 2.2vw, 32px);
+      line-height: 1.25;
+      color: #e9dfd0;
+      font-weight: 600;
+    }
+
+    .caption {
+      color: #e9dfd0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 0 28px;
+      margin-top: 36px;
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 850;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.24);
+    }
+
+    .hero {
+      min-height: 1000px;
+      display: flex;
+      align-items: center;
+      color: var(--paper);
+      background: var(--charcoal);
+      padding-top: 120px;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      pointer-events: none;
+    }
+
+    .hero-image {
+      position: relative;
+      min-width: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-image.wheat img {
+      object-position: 50% 58%;
+    }
+
+    .hero-image.dry img {
+      object-position: 50% 64%;
+    }
+
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14, 16, 15, 0.08), rgba(14, 16, 15, 0.22) 52%, rgba(14, 16, 15, 0.42));
+    }
+
+    .hero-veil {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(12, 13, 12, 0.22), rgba(12, 13, 12, 0.72) 48%, rgba(12, 13, 12, 0.2)),
+        linear-gradient(90deg, transparent 0 47%, rgba(253, 252, 248, 0.15) 49.6%, rgba(17, 18, 17, 0.44) 50%, rgba(253, 252, 248, 0.12) 50.4%, transparent 53%);
+      pointer-events: none;
+    }
+
+    .hero .inner { margin-top: 34px; }
+    .hero .caption { margin-top: 170px; }
+
+    .paradox {
+      background: var(--paper);
+      min-height: 860px;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+      margin-top: 80px;
+    }
+
+    .data-card {
+      min-height: 360px;
+      padding: 48px 36px 30px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.35);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .giant-number {
+      font-size: clamp(54px, 5vw, 82px);
+      line-height: 0.95;
+      font-weight: 900;
+    }
+
+    .data-card:nth-child(2) .giant-number { color: var(--red); }
+    .data-body {
+      margin-top: 36px;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.35;
+      font-weight: 400;
+    }
+
+    .source {
+      margin-top: 28px;
+      text-align: right;
+      color: #948c82;
+      font-size: 11px;
+      font-style: italic;
+    }
+
+    .center-line {
+      margin-top: 72px;
+      text-align: center;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.15;
+      font-weight: 850;
+    }
+
+    .meaning {
+      background: var(--paper-2);
+      min-height: 760px;
+    }
+
+    .paradox::after,
+    .meaning::after,
+    .access-core::after,
+    .system::after,
+    .hidden-hunger::after {
+      content: attr(data-word);
+      position: absolute;
+      right: -0.08em;
+      bottom: -0.18em;
+      z-index: 1;
+      color: rgba(31, 36, 33, 0.045);
+      font-size: clamp(108px, 17vw, 260px);
+      line-height: 0.8;
+      font-weight: 950;
+      letter-spacing: -0.04em;
+      pointer-events: none;
+    }
+
+    .paradox::after {
+      content: "INEQUALITY";
+    }
+
+    .access-core::after {
+      content: "ENTITLEMENT";
+    }
+
+    .system::after {
+      color: rgba(253, 252, 248, 0.055);
+      content: "INSTABILITY";
+    }
+
+    .hidden-hunger::after {
+      content: "NUTRITION";
+      color: rgba(49, 92, 69, 0.055);
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 28px;
+      margin-top: 82px;
+      align-items: start;
+    }
+
+    .concept-card {
+      min-height: 205px;
+      padding: 34px 26px;
+      border: 1px solid #d7cec1;
+      border-radius: 8px;
+      background: #fffdf7;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .concept-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--green);
+      background: white;
+      box-shadow: 0 24px 48px rgba(43, 29, 24, 0.16);
+    }
+
+    .concept-card.access {
+      grid-column: span 2;
+      min-height: 290px;
+      padding: 42px 38px;
+      color: var(--paper);
+      background: var(--red);
+      border: 4px solid var(--red);
+      box-shadow: 0 28px 70px rgba(139, 30, 30, 0.16);
+    }
+
+    .concept-card.access p { color: #f4e6e0; }
+    .concept-card.access:hover {
+      border-color: var(--red);
+      background: #9b2929;
+    }
+
+    .concept-card h3,
+    .analysis-card h3 {
+      font-size: 25px;
+      line-height: 1.1;
+      font-weight: 850;
+    }
+
+    .concept-card.access h3 {
+      font-size: clamp(38px, 4vw, 54px);
+      line-height: 0.98;
+      font-weight: 950;
+    }
+
+    .concept-card p {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 400;
+    }
+
+    .concept-card.access p {
+      max-width: 420px;
+      margin-top: 34px;
+      font-size: 24px;
+      line-height: 1.32;
+      font-weight: 650;
+    }
+
+    .section-note {
+      max-width: 1000px;
+      margin: 64px auto 0;
+      text-align: center;
+      font-size: clamp(22px, 2vw, 28px);
+      line-height: 1.35;
+      font-weight: 550;
+    }
+
+    .access-core {
+      background: var(--paper);
+      min-height: 820px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 76px;
+    }
+
+    .theory-card,
+    .flow-card {
+      min-height: 360px;
+      border-radius: 8px;
+      padding: 42px;
+    }
+
+    .theory-card {
+      background: #f5f0e7;
+      border: 1px solid var(--line);
+    }
+
+    .portrait-row {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .portrait {
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      flex: none;
+      overflow: hidden;
+      background: #bdb8b0;
+      border: 1px solid rgba(31, 36, 33, 0.14);
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: 50% 38%;
+      filter: grayscale(1) contrast(1.04);
+    }
+
+    .quote {
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .flow-card {
+      color: var(--paper);
+      background: var(--charcoal);
+    }
+
+    .entitlement-flow {
+      display: grid;
+      gap: 14px;
+      justify-items: stretch;
+    }
+
+    .flow-step {
+      padding: 16px 18px;
+      border: 1px solid rgba(216, 205, 185, 0.18);
+      border-radius: 6px;
+      background: rgba(253, 252, 248, 0.055);
+      text-align: center;
+    }
+
+    .flow-step.major {
+      border-color: rgba(253, 252, 248, 0.2);
+      background: transparent;
+      color: var(--paper);
+      font-size: clamp(30px, 2.9vw, 42px);
+      line-height: 1.02;
+      font-weight: 900;
+    }
+
+    .flow-step.context {
+      color: #d8cdb9;
+      font-size: 17px;
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .flow-step.context strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--paper);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .flow-step.disruption {
+      border-color: rgba(139, 30, 30, 0.9);
+      background: var(--red);
+      color: var(--paper);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .flow-step.disruption span {
+      display: block;
+      margin-top: 6px;
+      color: #f0d8d2;
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .flow-step.failure {
+      border-color: rgba(228, 176, 77, 0.75);
+      background: rgba(228, 176, 77, 0.12);
+      color: #e4b04d;
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 950;
+    }
+
+    .flow-arrow {
+      color: rgba(216, 205, 185, 0.78);
+      text-align: center;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .supporting-text {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.48;
+      font-weight: 500;
+    }
+
+    .keywords {
+      display: flex;
+      gap: 24px;
+      margin-top: 42px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      min-width: 160px;
+      padding: 12px 18px;
+      border: 1px solid rgba(139, 30, 30, 0.45);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--red);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .system {
+      color: var(--paper);
+      background: #171a17;
+      min-height: 960px;
+    }
+
+    .system h2 { color: var(--paper); }
+    .loop-wrap {
+      position: relative;
+      height: 560px;
+      margin-top: 64px;
+    }
+
+    .loop-connectors {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      opacity: 0.82;
+      pointer-events: none;
+    }
+
+    .loop-connectors .main-loop {
+      fill: none;
+      stroke: rgba(216, 205, 185, 0.44);
+      stroke-width: 2;
+      stroke-dasharray: 6 10;
+    }
+
+    .loop-connectors .flow-stroke {
+      fill: none;
+      stroke: rgba(228, 176, 77, 0.28);
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+
+    .loop-connectors .subtle-arrow {
+      fill: rgba(216, 205, 185, 0.58);
+    }
+
+    .loop-node {
+      position: absolute;
+      width: 226px;
+      min-height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      border: 1px solid rgba(216, 205, 185, 0.2);
+      border-radius: 8px;
+      background: #f3eee4;
+      color: var(--ink);
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 900;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.12);
+    }
+
+    .loop-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 570px;
+      height: 390px;
+      border: 1px solid rgba(216, 205, 185, 0.24);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+    }
+
+    .loop-ring::after {
+      content: "";
+      position: absolute;
+      right: 42px;
+      bottom: 60px;
+      width: 0;
+      height: 0;
+      border-left: 16px solid rgba(216, 205, 185, 0.78);
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      transform: rotate(34deg);
+    }
+
+    .loop-node:nth-child(2) { left: 50%; top: 0; transform: translateX(-50%); }
+    .loop-node:nth-child(3) { right: 112px; top: 100px; }
+    .loop-node:nth-child(4) { right: 138px; bottom: 110px; }
+    .loop-node:nth-child(5) { left: 50%; bottom: 0; transform: translateX(-50%); }
+    .loop-node:nth-child(6) { left: 138px; bottom: 110px; }
+    .loop-node:nth-child(7) { left: 112px; top: 100px; }
+
+    .loop-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 260px;
+      min-height: 112px;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      border: 1px solid rgba(228, 176, 77, 0.6);
+      border-radius: 50%;
+      background: rgba(228, 176, 77, 0.1);
+      color: #e4b04d;
+      text-align: center;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .case-study {
+      position: relative;
+      margin-top: 58px;
+      padding: 28px 32px;
+      border-left: 6px solid var(--red);
+      background: rgba(253, 252, 248, 0.08);
+      color: var(--paper);
+      overflow: hidden;
+    }
+
+    .case-study::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(23, 26, 23, 0.96), rgba(23, 26, 23, 0.72)),
+        radial-gradient(circle at 82% 52%, rgba(253, 252, 248, 0.16) 0 7%, transparent 8%),
+        linear-gradient(0deg, transparent 0 42%, rgba(253, 252, 248, 0.09) 42% 45%, transparent 45%),
+        repeating-linear-gradient(90deg, transparent 0 34px, rgba(253, 252, 248, 0.065) 34px 36px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .case-study .label {
+      position: relative;
+      z-index: 1;
+      color: #e4b04d;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .case-study h3 {
+      position: relative;
+      z-index: 1;
+      margin-top: 10px;
+      font-size: 28px;
+      line-height: 1.18;
+    }
+
+    .case-study p {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin-top: 14px;
+      color: #d9d0c0;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .human-cues {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .human-cues span {
+      padding: 7px 10px;
+      border: 1px solid rgba(216, 205, 185, 0.22);
+      border-radius: 999px;
+      color: #d8cdb9;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .trade {
+      min-height: 860px;
+      padding-left: 0;
+      padding-right: 0;
+      background:
+        linear-gradient(180deg, var(--paper), #f7f1e7);
+    }
+
+    .trade .inner {
+      padding-left: clamp(22px, 8vw, 120px);
+      padding-right: clamp(22px, 8vw, 120px);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 66px;
+      min-height: 430px;
+    }
+
+    .split-half {
+      position: relative;
+      padding: 60px clamp(26px, 7vw, 120px);
+      overflow: hidden;
+    }
+
+    .split-half::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.38;
+      pointer-events: none;
+    }
+
+    .split-half > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .split-half:first-child {
+      background: #dce5d8;
+    }
+
+    .split-half:first-child::before {
+      background:
+        linear-gradient(90deg, rgba(220, 229, 216, 0.96), rgba(220, 229, 216, 0.66)),
+        repeating-linear-gradient(0deg, transparent 0 62px, rgba(49, 92, 69, 0.12) 62px 65px),
+        linear-gradient(115deg, transparent 0 54%, rgba(49, 92, 69, 0.28) 55% 57%, transparent 58%),
+        radial-gradient(circle at 72% 72%, rgba(31, 36, 33, 0.22) 0 5%, transparent 6%);
+    }
+
+    .split-half:last-child {
+      background: #d6a24f;
+    }
+
+    .split-half:last-child::before {
+      background:
+        linear-gradient(90deg, rgba(214, 162, 79, 0.72), rgba(96, 47, 34, 0.28)),
+        repeating-linear-gradient(35deg, transparent 0 84px, rgba(96, 47, 34, 0.2) 84px 88px),
+        radial-gradient(circle at 72% 72%, rgba(139, 30, 30, 0.28) 0 9%, transparent 10%);
+    }
+    .split-half h3 {
+      font-size: 36px;
+      line-height: 1.08;
+      margin-bottom: 36px;
+    }
+
+    .split-half:first-child h3 { color: var(--green); }
+    .split-half:last-child h3 { color: var(--red); }
+
+    .split-half p {
+      white-space: pre-line;
+      font-size: 27px;
+      line-height: 1.55;
+      font-weight: 650;
+    }
+
+    .center-question {
+      max-width: 620px;
+      margin: -60px auto 0;
+      position: relative;
+      z-index: 3;
+      padding: 30px 40px;
+      border-radius: 999px;
+      background: var(--paper);
+      text-align: center;
+      font-size: 25px;
+      line-height: 1.28;
+      font-weight: 900;
+      box-shadow: 0 24px 52px rgba(43, 29, 24, 0.14);
+    }
+
+    .hidden-hunger {
+      background: #f5f0e7;
+      min-height: 820px;
+    }
+
+    .nutrition-line {
+      margin-top: 18px;
+      font-size: clamp(44px, 5vw, 72px);
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .nutrition-intro {
+      max-width: 820px;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 23px;
+      line-height: 1.42;
+      font-weight: 650;
+    }
+
+    .nutrition-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 60px;
+    }
+
+    .nutrition-card {
+      min-height: 360px;
+      padding: 34px;
+      border: 1px solid #d8d1c5;
+      border-radius: 8px;
+      background: rgba(253, 252, 248, 0.78);
+    }
+
+    .nutrition-card.calorie-card {
+      border-left: 6px solid var(--ochre);
+    }
+
+    .nutrition-card.balanced-card {
+      border-left: 6px solid var(--green);
+    }
+
+    .nutrition-card h3 {
+      font-size: 34px;
+      line-height: 1.1;
+      font-weight: 900;
+    }
+
+    .food-chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .food-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: #fffdf7;
+      border: 1px solid rgba(31, 36, 33, 0.1);
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .food-chip::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ochre);
+      flex: none;
+    }
+
+    .balanced-card .food-chip::before {
+      background: var(--green);
+    }
+
+    .nutrition-points {
+      display: grid;
+      gap: 10px;
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.32;
+      font-weight: 650;
+    }
+
+    .tag-row {
+      display: flex;
+      justify-content: flex-start;
+      gap: 22px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 12px 18px;
+      border-radius: 6px;
+      border: 1px solid rgba(49, 92, 69, 0.24);
+      color: var(--ink);
+      background: var(--paper);
+      font-weight: 650;
+    }
+
+    .deficiency-block {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+      align-items: center;
+      margin-top: 48px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(31, 36, 33, 0.12);
+    }
+
+    .deficiency-label {
+      color: var(--green);
+      font-size: 17px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .data-note {
+      margin-top: 26px;
+      color: var(--red);
+      font-size: 17px;
+      line-height: 1.4;
+      font-weight: 650;
+    }
+
+    .future {
+      min-height: 900px;
+    }
+
+    .critical-question {
+      max-width: 900px;
+      margin-top: 28px;
+      color: var(--red);
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.18;
+      font-weight: 750;
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 28px;
+      margin-top: 78px;
+    }
+
+    .analysis-card {
+      min-height: 420px;
+      padding: 32px 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf7;
+    }
+
+    .analysis-card.policy {
+      border: 3px solid var(--red);
+    }
+
+    .analysis-card.policy h3 { color: var(--red); }
+    .analysis-card p {
+      margin-top: 34px;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .strength { color: var(--green); font-weight: 650; }
+    .limitation { color: var(--muted); }
+
+    .future-tension {
+      max-width: 920px;
+      margin: 50px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid rgba(31, 36, 33, 0.12);
+      color: var(--red);
+      text-align: center;
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .final {
+      min-height: 760px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: var(--paper);
+      background: #111211;
+    }
+
+    .final h1 {
+      margin: 0 auto;
+      max-width: 1160px;
+      font-size: clamp(42px, 5vw, 70px);
+      line-height: 1.08;
+    }
+
+    .final .final-subtitle {
+      margin-top: 34px;
+      color: #d8cdb9;
+      font-size: 28px;
+      line-height: 1.3;
+      font-weight: 650;
+    }
+
+    .final .statement {
+      max-width: 880px;
+      margin: 76px auto 0;
+      font-size: 30px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .reflective-question {
+      max-width: 920px;
+      margin: 42px auto 0;
+      color: #e4b04d;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .source-strip {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 960px;
+      margin: 72px auto 0;
+    }
+
+    .source-item {
+      position: relative;
+      appearance: none;
+      cursor: pointer;
+      padding: 8px 12px;
+      border: 1px solid rgba(216, 205, 185, 0.24);
+      border-radius: 999px;
+      background: transparent;
+      color: #d8cdb9;
+      font-size: 12px;
+      font-weight: 750;
+      font-family: inherit;
+    }
+
+    .source-item:hover,
+    .source-item:focus-visible,
+    .source-item.is-active {
+      border-color: rgba(228, 176, 77, 0.8);
+      color: #e4b04d;
+      outline: none;
+    }
+
+    .source-detail {
+      max-width: 780px;
+      min-height: 96px;
+      margin: 22px auto 0;
+      padding: 18px 22px;
+      border: 1px solid rgba(216, 205, 185, 0.22);
+      border-radius: 8px;
+      background: rgba(253, 252, 248, 0.06);
+      color: #d8cdb9;
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .source-detail strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--paper);
+      font-size: 17px;
+    }
+
+    .footer {
+      margin-top: 42px;
+      color: #beb5a7;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 550ms ease, transform 550ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .nav { display: none; }
+      section { padding-top: 68px; padding-bottom: 68px; }
+      .hero { min-height: 860px; }
+      .hero-image.wheat img {
+        object-position: 50% 62%;
+      }
+      .hero-image.dry img {
+        object-position: 50% 66%;
+      }
+      .hero .caption { margin-top: 120px; }
+      .concept-card.access {
+        grid-column: auto;
+        min-height: 235px;
+      }
+      .data-grid,
+      .concept-grid,
+      .two-col,
+      .split,
+      .nutrition-compare,
+      .deficiency-block,
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+      .loop-wrap { height: auto; display: grid; gap: 18px; }
+      .loop-ring,
+      .loop-connectors { display: none; }
+      .loop-node,
+      .loop-center {
+        position: static;
+        transform: none !important;
+        width: 100%;
+      }
+      .center-question { margin-top: 28px; border-radius: 28px; }
+      .nutrition-line { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">Food Security Explainer</div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#paradox">Paradox</a>
+      <a href="#meaning">Meaning</a>
+      <a href="#access">Access</a>
+      <a href="#system">System</a>
+      <a href="#future">Future</a>
+    </nav>
+    <div class="brand">5708481</div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-media" aria-hidden="true">
+        <div class="hero-image wheat">
+          <img src="assets/wheat-field-unsplash.jpg?v=2" alt="">
+        </div>
+        <div class="hero-image dry">
+          <img src="assets/dry-cracked-land-unsplash.jpg?v=2" alt="">
+        </div>
+      </div>
+      <div class="hero-veil"></div>
+      <div class="inner reveal">
+        <h1>IF THERE IS ENOUGH FOOD, WHY ARE PEOPLE STILL HUNGRY?</h1>
+        <p class="subtitle">Exploring food security as a problem of access, inequality and sustainability</p>
+        <a class="button" href="#paradox">Start Exploring</a>
+        <p class="caption">Food security is not only about growing more food.</p>
+      </div>
+    </section>
+
+    <section class="paradox" id="paradox">
+      <div class="inner reveal">
+        <h2>A world of abundance and hunger</h2>
+        <div class="data-grid">
+          <article class="data-card">
+            <div>
+              <div class="giant-number">673 MILLION</div>
+              <p class="data-body">people faced hunger in 2024.</p>
+            </div>
+            <p class="source">Source: SOFI 2025 Report</p>
+          </article>
+          <article class="data-card">
+            <div>
+              <div class="giant-number">2.3 BILLION</div>
+              <p class="data-body">people experienced moderate or severe food insecurity in 2024.</p>
+            </div>
+            <p class="source">Source: SOFI 2025 Report</p>
+          </article>
+          <article class="data-card">
+            <div>
+              <div class="giant-number">19%</div>
+              <p class="data-body">of food available to consumers was wasted at retail, food service, and household levels.</p>
+            </div>
+            <p class="source">Source: UNEP Food Waste Index 2024</p>
+          </article>
+        </div>
+        <p class="center-line">Hunger persists in a world where food still exists.</p>
+      </div>
+    </section>
+
+    <section class="meaning" id="meaning" data-word="ACCESS">
+      <div class="inner reveal">
+        <h2>Food security is more than food supply</h2>
+        <div class="concept-grid">
+          <article class="concept-card">
+            <h3>Availability</h3>
+            <p>Is food physically available?</p>
+          </article>
+          <article class="concept-card access">
+            <h3>Access</h3>
+            <p>Can people afford and obtain food?</p>
+          </article>
+          <article class="concept-card">
+            <h3>Utilisation</h3>
+            <p>Is food nutritious, safe, and usable?</p>
+          </article>
+          <article class="concept-card">
+            <h3>Stability</h3>
+            <p>Can people rely on food access over time?</p>
+          </article>
+        </div>
+        <p class="section-note">Food production mainly addresses availability, but food security also depends on access, utilisation, and stability.</p>
+      </div>
+    </section>
+
+    <section class="access-core" id="access">
+      <div class="inner reveal">
+        <h2>Hunger is often an access problem</h2>
+        <div class="two-col">
+          <article class="theory-card">
+            <div class="portrait-row">
+              <div class="portrait" aria-hidden="true">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Amartya_Sen_NIH.jpg" alt="">
+              </div>
+              <h3>Amartya Sen's Entitlement Theory</h3>
+            </div>
+            <p class="quote">"Hunger is often caused not by lack of food, but by lack of access to food."</p>
+            <p class="supporting-text">Sen's theory shows that food insecurity can occur even when food is available, because people may lose access through poverty, inflation, conflict, market failure or weak social support.</p>
+          </article>
+          <article class="flow-card">
+            <div class="entitlement-flow" aria-label="Entitlement theory vertical logic flow">
+              <div class="flow-step major">FOOD EXISTS</div>
+              <div class="flow-arrow">&darr;</div>
+              <div class="flow-step context">
+                <strong>Access depends on</strong>
+                income · markets · rights · social support
+              </div>
+              <div class="flow-arrow">&darr;</div>
+              <div class="flow-step disruption">
+                Poverty · Inflation · Conflict
+                <span>disrupt access</span>
+              </div>
+              <div class="flow-arrow">&darr;</div>
+              <div class="flow-step failure">ENTITLEMENT FAILURE</div>
+              <div class="flow-arrow">&darr;</div>
+              <div class="flow-step major">HUNGER PERSISTS</div>
+            </div>
+          </article>
+        </div>
+        <div class="keywords">
+          <span class="pill">Power</span>
+          <span class="pill">Poverty</span>
+          <span class="pill">Prices</span>
+          <span class="pill">Policy</span>
+        </div>
+        <p class="section-note">Food insecurity is a structural issue, not simply a production failure.</p>
+      </div>
+    </section>
+
+    <section class="system" id="system">
+      <div class="inner reveal">
+        <h2>Food insecurity is interconnected</h2>
+        <div class="loop-wrap" aria-label="Circular feedback loop">
+          <svg class="loop-connectors" viewBox="0 0 1200 560" role="presentation" aria-hidden="true">
+            <ellipse class="flow-stroke" cx="600" cy="280" rx="292" ry="202" transform="rotate(-8 600 280)"></ellipse>
+            <ellipse class="main-loop" cx="600" cy="280" rx="292" ry="202" transform="rotate(-8 600 280)"></ellipse>
+            <path class="subtle-arrow" d="M885 338 l28 8 l-23 17 z"></path>
+            <path class="subtle-arrow" d="M338 206 l-28 -8 l23 -17 z"></path>
+          </svg>
+          <div class="loop-ring"></div>
+          <div class="loop-node">Climate change</div>
+          <div class="loop-node">Crop loss and unstable harvests</div>
+          <div class="loop-node">Higher food prices</div>
+          <div class="loop-node">Reduced household access</div>
+          <div class="loop-node">Food insecurity</div>
+          <div class="loop-node">Political instability and vulnerability</div>
+          <div class="loop-center">Further disruption feeds back into the system</div>
+        </div>
+        <div class="case-study">
+          <div class="label">Mini case study</div>
+          <h3>UK Food Banks</h3>
+          <p>Even in high-income countries, food insecurity can persist. In the UK, rising food prices and cost-of-living pressures have increased reliance on food banks, showing that food access depends on income, affordability and social support — not only national food supply.</p>
+          <div class="human-cues" aria-label="Human food system contexts">
+            <span>food banks</span>
+            <span>household budgets</span>
+            <span>market prices</span>
+            <span>social support</span>
+          </div>
+        </div>
+        <p class="section-note">Food insecurity is not caused by one factor. It emerges when environmental, economic and political pressures reinforce each other.</p>
+      </div>
+    </section>
+
+    <section class="trade" id="trade">
+      <div class="inner reveal">
+        <h2>Can we produce more food without damaging the planet?</h2>
+      </div>
+      <div class="split reveal">
+        <div class="split-half">
+          <h3>Production Pressure</h3>
+          <p>Higher yields
+Fertilisers
+Mechanisation
+Intensive farming</p>
+        </div>
+        <div class="split-half">
+          <h3>Environmental Costs</h3>
+          <p>Greenhouse gas emissions
+Biodiversity loss
+Soil degradation
+Water stress</p>
+        </div>
+      </div>
+      <div class="center-question reveal">The food system depends on nature, but can also damage it.</div>
+      <div class="inner reveal">
+        <p class="section-note">Increasing production may solve short-term supply problems while creating long-term environmental risks.</p>
+      </div>
+    </section>
+
+    <section class="hidden-hunger" id="nutrition">
+      <div class="inner reveal">
+        <h2 class="nutrition-line">Enough calories &ne; Adequate nutrition</h2>
+        <p class="nutrition-intro">Food security is not only about preventing starvation, but also about ensuring access to safe, nutritious and balanced diets.</p>
+        <div class="nutrition-compare">
+          <article class="nutrition-card calorie-card">
+            <h3>Cheap Calories</h3>
+            <div class="food-chip-grid" aria-label="Examples of cheap calorie foods">
+              <span class="food-chip">Bread</span>
+              <span class="food-chip">Rice</span>
+              <span class="food-chip">Instant noodles</span>
+              <span class="food-chip">Sugary snacks</span>
+              <span class="food-chip">Processed foods</span>
+            </div>
+            <div class="nutrition-points">
+              <span>High energy</span>
+              <span>Low nutrient diversity</span>
+            </div>
+          </article>
+          <article class="nutrition-card balanced-card">
+            <h3>Balanced Nutrition</h3>
+            <div class="food-chip-grid" aria-label="Examples of balanced nutrition foods">
+              <span class="food-chip">Vegetables</span>
+              <span class="food-chip">Legumes</span>
+              <span class="food-chip">Fruit</span>
+              <span class="food-chip">Protein</span>
+              <span class="food-chip">Dairy</span>
+            </div>
+            <div class="nutrition-points">
+              <span>Micronutrients</span>
+              <span>Diet diversity</span>
+            </div>
+          </article>
+        </div>
+        <div class="deficiency-block">
+          <div class="deficiency-label">Common micronutrient deficiencies</div>
+          <div class="tag-row" aria-label="Common micronutrient deficiencies">
+            <span class="tag">Iron</span>
+            <span class="tag">Vitamin A</span>
+            <span class="tag">Zinc</span>
+          </div>
+        </div>
+        <p class="data-note">Over 2 billion people globally are affected by micronutrient deficiencies.</p>
+        <p class="data-note">Micronutrient deficiencies can affect immunity, development and long-term health.</p>
+        <p class="section-note">A person may consume enough calories while remaining nutritionally insecure.</p>
+      </div>
+    </section>
+
+    <section class="future" id="future">
+      <div class="inner reveal">
+        <h2>No single solution is enough</h2>
+        <p class="critical-question">Can food systems become more sustainable without reducing affordability and productivity?</p>
+        <div class="analysis-grid">
+          <article class="analysis-card">
+            <h3>Sustainable Intensification</h3>
+            <p class="strength">Strength: Improves efficiency and yield.</p>
+            <p class="limitation">Limitation: May still depend on industrial inputs.</p>
+          </article>
+          <article class="analysis-card">
+            <h3>Agroecology</h3>
+            <p class="strength">Strength: Supports ecological resilience.</p>
+            <p class="limitation">Limitation: May face short-term yield or scaling challenges.</p>
+          </article>
+          <article class="analysis-card">
+            <h3>Food Aid &amp; Social Protection</h3>
+            <p class="strength">Strength: Provides immediate relief.</p>
+            <p class="limitation">Limitation: May not solve structural inequality.</p>
+          </article>
+          <article class="analysis-card policy">
+            <h3>Food Sovereignty &amp; Policy Reform</h3>
+            <p class="strength">Strength: Empowers local communities and addresses structural access.</p>
+            <p class="limitation">Limitation: Difficult to implement within existing global free-trade systems.</p>
+          </article>
+        </div>
+        <p class="future-tension">No response solves all dimensions of food insecurity simultaneously.</p>
+        <p class="section-note">Food security requires responses that address production, access, nutrition, resilience, and sustainability together.</p>
+      </div>
+    </section>
+
+    <section class="final" id="reflection">
+      <div class="inner reveal">
+        <h1>Food security is not simply about producing more food.</h1>
+        <p class="final-subtitle">It is about access, equity, resilience, and sustainability.</p>
+        <p class="statement">The challenge is not only how to grow more food, but how to build a food system that feeds people fairly and sustainably.</p>
+        <p class="reflective-question">How should food systems balance productivity, equity and environmental sustainability?</p>
+        <div class="source-strip" aria-label="Data and theory sources">
+          <button class="source-item is-active" type="button" data-source="sen">Sen 1981 · Sen1981</button>
+          <button class="source-item" type="button" data-source="sofi">SOFI 2025 · SOFI2025</button>
+          <button class="source-item" type="button" data-source="unep">UNEP FWI 2024 · UNEPFWI2024</button>
+          <button class="source-item" type="button" data-source="fao">FAO Food Security Framework · FAOFoodSecurity</button>
+          <button class="source-item" type="button" data-source="sdg">SDG 2 · SDG2ZeroHunger</button>
+        </div>
+        <div class="source-detail" id="source-detail" aria-live="polite">
+          <strong>Poverty and Famines: An Essay on Entitlement and Deprivation</strong>
+          Amartya Sen, 1981. Used here as the theoretical core for entitlement failure and access-based food insecurity.
+        </div>
+        <p class="footer">References / Data Sources / [QR Code]</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((node) => observer.observe(node));
+
+    const sourceDetails = {
+      sen: {
+        title: "Poverty and Famines: An Essay on Entitlement and Deprivation",
+        body: "Amartya Sen, 1981. Used here as the theoretical core for entitlement failure and access-based food insecurity."
+      },
+      sofi: {
+        title: "The State of Food Security and Nutrition in the World 2025",
+        body: "FAO, IFAD, UNICEF, WFP and WHO. Used here for global hunger and food insecurity data."
+      },
+      unep: {
+        title: "Food Waste Index Report 2024",
+        body: "UNEP. Used here for the food waste statistic in the global paradox section."
+      },
+      fao: {
+        title: "Food Security Framework",
+        body: "FAO. Used here for the four pillars: availability, access, utilisation and stability."
+      },
+      sdg: {
+        title: "Sustainable Development Goal 2: Zero Hunger",
+        body: "United Nations. Used here as the policy context for ending hunger and improving food systems."
+      }
+    };
+
+    const sourceDetail = document.querySelector('#source-detail');
+    document.querySelectorAll('.source-item').forEach((button) => {
+      button.addEventListener('click', () => {
+        const detail = sourceDetails[button.dataset.source];
+        document.querySelectorAll('.source-item').forEach((item) => item.classList.remove('is-active'));
+        button.classList.add('is-active');
+        sourceDetail.innerHTML = `<strong>${detail.title}</strong>${detail.body}`;
+      });
+    });
+  </script>
+</body>
+</html>
